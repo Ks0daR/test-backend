@@ -1,6 +1,12 @@
 import express from "express";
+import { productsRouter } from "./products/products.router";
+import { Client } from "pg";
 
 const PORT = process.env.PORT || 8080;
+const dbURL = process.env.DATABASE_URL;
+const client = new Client({
+  dbURL,
+});
 
 export class ProductsServer {
   constructor() {
@@ -25,7 +31,8 @@ export class ProductsServer {
 
   async initDbConnect() {
     try {
-     
+      await client.connect();
+      
     } catch (err) {
       console.log("Error connect to db");
       process.exit(1);
@@ -35,7 +42,6 @@ export class ProductsServer {
   initRoutes() {
     this.server.use("/products", productsRouter);
   }
-
 
   startListening() {
     this.server.listen(PORT, () => {
