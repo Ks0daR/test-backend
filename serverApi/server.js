@@ -1,11 +1,19 @@
 import express from "express";
 import { productsRouter } from "./products/products.router";
-import { Client } from "pg";
+import pg, { Client } from "pg";
+import { Sequelize } from "sequelize";
 
 const PORT = process.env.PORT || 8080;
-const dbURL = process.env.DATABASE_URL;
+
+// const sequelize = new Sequelize(process.env.DATABASE_URL)
+
 const client = new Client({
-  dbURL,
+  user: process.env.DBUSER,
+  host: process.env.DBHOST,
+  database: process.env.DB,
+  password: process.env.DBPASS,
+  port: process.env.DBPORT,
+  ssl: { rejectUnauthorized: false },
 });
 
 export class ProductsServer {
@@ -32,7 +40,11 @@ export class ProductsServer {
   async initDbConnect() {
     try {
       await client.connect();
-      
+      client.query("SELECT NOW()", (err, res) => {
+        console.log(err, res);
+        client.end();
+      });
+      console.log("Connect to DB success");
     } catch (err) {
       console.log("Error connect to db");
       process.exit(1);
