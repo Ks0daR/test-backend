@@ -2,10 +2,10 @@ import db from "../database/db";
 
 class ProductsController {
   async createNewProduct(req, res) {
-    const { img, sity, quantity, description } = req.body;
+    const { img, name, price, description } = req.body;
     const newProduct = await db.query(
-      "INSERT INTO product (img, sity, quantity, description) values ($1, $2, $3, $4) RETURNING *",
-      [img, sity, quantity, description]
+      "INSERT INTO product (img, name, price, description) values ($1, $2, $3, $4) RETURNING *",
+      [img, name, price, description]
     );
 
     res.status(201).json(newProduct.rows[0]);
@@ -17,11 +17,11 @@ class ProductsController {
   }
 
   async updateProduct(req, res) {
-    const { id, img, sity, quantity, description } = req.body;
+    const { id, img, name, price, description } = req.body;
 
     const updatedProduct = await db.query(
-      "UPDATE product set img = $1, sity = $2, quantity = $3, description = $4 where id = $5 RETURNING *",
-      [img, sity, quantity, description, id]
+      "UPDATE product set img = $1, name = $2, price = $3, description = $4 where id = $5 RETURNING *",
+      [img, name, price, description, id]
     );
 
     res.status(201).json(updatedProduct);
