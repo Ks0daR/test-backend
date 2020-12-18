@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import db from "./database/db";
 import { createTable } from "./database/db.createTable";
 import { productsRouter } from "./products/products.router";
@@ -24,6 +25,7 @@ export class ProductsServer {
 
   initMiddleware() {
     this.server.use(express.json());
+    this.server.use(cors());
   }
 
   async initDbConnect() {
