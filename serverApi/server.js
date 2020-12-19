@@ -31,10 +31,10 @@ export class ProductsServer {
 
   async initDbConnect() {
     try {
-      // await db.query("DROP TABLE IF EXISTS product");
-      // await db.query(createTable);
+      await db.query("DROP TABLE IF EXISTS product");
+      await db.query(createTable);
       // console.log(resultFormat);
-      // await db.query(resultFormat);
+      await db.query(resultFormat);
       console.log("Connect to DB success");
     } catch (err) {
       console.log("Error connect to db");
