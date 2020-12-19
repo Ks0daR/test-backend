@@ -24,7 +24,7 @@ class ProductsController {
       [img, name, price, description, id]
     );
 
-    res.status(201).json(updatedProduct);
+    res.status(201).json(updatedProduct.rows[0]);
   }
   async deleteProduct(req, res) {
     const id = req.params.id;
