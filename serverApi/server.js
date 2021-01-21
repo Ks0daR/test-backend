@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
 import db from "./database/db";
-import { createTable } from "./database/db.createTable";
+import { createTable, dropTable } from "./database/db.queries";
 import { productsRouter } from "./products/products.router";
-import { resultFormat } from "./database/products";
+import { addProductsInDB } from "./database/products";
 
 const PORT = process.env.PORT || 8080;
 
@@ -31,10 +31,9 @@ export class ProductsServer {
 
   async initDbConnect() {
     try {
-      await db.query("DROP TABLE IF EXISTS product");
+      await db.query(dropTable);
       await db.query(createTable);
-      // console.log(resultFormat);
-      await db.query(resultFormat);
+      await db.query(addProductsInDB);
       console.log("Connect to DB success");
     } catch (err) {
       console.log("Error connect to db");

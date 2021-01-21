@@ -30,4 +30,4 @@ const products = [
   ],
 ];
 
-export const resultFormat = format(insertString, products);
+export const addProductsInDB = format(insertString, products);
